@@ -16,14 +16,16 @@ const ActiveButton = ({
     return (
       <View alignItems="center" marginBottom="$5">
         <Button
+          borderRadius={6}
           backgroundColor="#CE3762"
-          paddingHorizontal="$10"
-          paddingVertical="$2"
+          justifyContent="center"
+          alignItems="center"
           w="$5/6"
           h="$12"
           onPress={onPress}
+          elevation={2}
         >
-          <Text color="#F5F5F5">{text}</Text>
+          <Text color="#F5F5F5" bold>{text}</Text>
         </Button>
       </View>
     );
@@ -31,14 +33,16 @@ const ActiveButton = ({
   return (
     <View alignItems="center" marginBottom="$5">
       <Button
+        borderRadius={6}
         backgroundColor="#F5F5F5"
-        paddingHorizontal="$10"
-        paddingVertical="$2"
+        justifyContent="center"
+        alignItems="center"
         w="$5/6"
         h="$12"
         onPress={onPress} // Add the onPress event handler here
+        elevation={2}
       >
-        <Text color="#CE3762">{text}</Text>
+        <Text color="#CE3762" >{text}</Text>
       </Button>
     </View>
   );
@@ -61,9 +65,10 @@ export default function InterviewType() {
       />
       <View style={{ flex: 1 }}></View>
       <Button
+        borderRadius={6}
         backgroundColor="#CE3762"
-        paddingHorizontal="$10"
-        paddingVertical="$2"
+        justifyContent="center"
+        alignItems="center"
         marginHorizontal="$10"
         h="$12"
         marginVertical="$10"
@@ -73,7 +78,7 @@ export default function InterviewType() {
             : await router.push(`/interview/bulk/`)
         }
       >
-        <Text color="#F5F5F5" bold={true}>
+        <Text color="#F5F5F5" bold>
           Continue
         </Text>
       </Button>

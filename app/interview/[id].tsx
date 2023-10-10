@@ -173,12 +173,11 @@ export default function Interview() {
           {!interview.length && !isInterviewStarted && (
             <ChatBubble from={"system"} text={"Start the Interview"}>
               <Button
-                style={{
-                  backgroundColor: "transparent",
-                }}
+                backgroundColor="transparent"
+                paddingTop={12}
                 onPress={() => initiateInterview()}
               >
-                <Text bold={true} color="#CE3762">
+                <Text bold={true} color="#CE3762" underline textAlign="center">
                   Click Here to Start
                 </Text>
               </Button>
@@ -196,10 +195,13 @@ export default function Interview() {
         </ScrollView>
         {!interview.length ? null : speaking ? (
           <Button
+            marginHorizontal="$5"
+            padding={12}
+            justifyContent="center"
+            alignItems="center"
             style={{
               backgroundColor: "#CE3762",
-              borderRadius: 4,
-              marginVertical: 10,
+              borderRadius: 6,
             }}
             onPress={() => stopSpeechToText()}
           >
@@ -210,11 +212,13 @@ export default function Interview() {
         ) : modeInputText === false ? (
           <View>
             <Button
+              marginHorizontal="$5"
+              padding={12}
+              justifyContent="center"
+              alignItems="center"
               style={{
                 backgroundColor: "#CE3762",
-                borderRadius: 4,
-                marginVertical: 10,
-                marginHorizontal: 30,
+                borderRadius: 6,
               }}
               onPress={() => startSpeechToText()}
             >
@@ -223,6 +227,9 @@ export default function Interview() {
               </Text>
             </Button>
             <Button
+              marginVertical={6}
+              justifyContent="center"
+              alignItems="center"
               onPress={() => {
                 setModeInputText(true);
               }}
@@ -246,9 +253,10 @@ export default function Interview() {
           <View
             style={{
               flexDirection: "row",
+              alignItems: "center",
               flex: 1,
-              paddingHorizontal: 10,
-              gap: 10,
+              paddingHorizontal: 14,
+              backgroundColor: '#CE3762'
             }}
           >
             <TextInput

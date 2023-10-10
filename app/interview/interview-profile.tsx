@@ -7,6 +7,7 @@ import {
   ToastTitle,
   VStack,
   useToast,
+  Box
 } from "@gluestack-ui/themed";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -107,96 +108,110 @@ export default function index() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <SafeAreaView>
-        <ScrollView>
-          <View style={{ padding: 30 }}>
+    <SafeAreaView
+      style={{
+        width: '100%',
+        backgroundColor: "#FAF9F6",
+        flex: 1,
+        height: "100%",
+      }}
+    >
+      <ScrollView
+        style={{
+          flex: 1,
+          height: '100%'
+        }}
+      >
+        <Box
+          flex={1}
+          marginHorizontal="$5"
+          justifyContent="space-between"
+          height={'$full'}
+        >
+          <View>
+            <View>
+              <View style={{ flexDirection: "row" }}>
+                <Text bold marginBottom={6}>Applied Position</Text>
+                <Text style={{ color: "red" }}> *</Text>
+              </View>
+
+              <TextInput
+                style={styles.input_normal}
+                placeholder="What role are you applying for?"
+                onChangeText={(text) =>
+                  handleTextChange("interviewerRole", text)
+                }
+                value={form.interviewerRole}
+              />
+            </View>
+
+            <View>
+              <View style={{ flexDirection: "row" }}>
+                <Text bold marginBottom={6}>Work Place</Text>
+                <Text style={{ color: "red" }}> *</Text>
+              </View>
+
+              <TextInput
+                style={styles.input_normal}
+                placeholder="What company are you applying at?"
+                onChangeText={(text) => handleTextChange("place", text)}
+                value={form.place}
+              />
+            </View>
+
+            <View>
+              <View style={{ flexDirection: "row" }}>
+                <Text bold marginBottom={6}>Max Questions to be asked</Text>
+                <Text style={{ color: "red" }}> *</Text>
+              </View>
+
+              <TextInput
+                style={styles.input_normal}
+                placeholder="10"
+                keyboardType="numeric"
+                onChangeText={(text) =>
+                  handleTextChange("maxQuestions", text)
+                }
+                value={form.maxQuestions}
+              />
+            </View>
+
             <View>
               <View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Applied Position</Text>
-                  <Text style={{ color: "red" }}> *</Text>
-                </View>
-
-                <TextInput
-                  style={styles.input_normal}
-                  placeholder="What role are you applying for?"
-                  onChangeText={(text) =>
-                    handleTextChange("interviewerRole", text)
-                  }
-                  value={form.interviewerRole}
-                />
+                <Text bold marginBottom={6}>Tell Me About Your Target Company</Text>
               </View>
 
-              <View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Work Place</Text>
-                  <Text style={{ color: "red" }}> *</Text>
-                </View>
-
-                <TextInput
-                  style={styles.input_normal}
-                  placeholder="What company are you applying at?"
-                  onChangeText={(text) => handleTextChange("place", text)}
-                  value={form.place}
-                />
-              </View>
-
-              <View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Max Questions to be asked</Text>
-                  <Text style={{ color: "red" }}> *</Text>
-                </View>
-
-                <TextInput
-                  style={styles.input_normal}
-                  placeholder="10"
-                  keyboardType="numeric"
-                  onChangeText={(text) =>
-                    handleTextChange("maxQuestions", text)
-                  }
-                  value={form.maxQuestions}
-                />
-              </View>
-
-              <View>
-                <View>
-                  <Text>Tell Me About Your Target Company</Text>
-                </View>
-
-                <TextInput
-                  multiline={true}
-                  numberOfLines={2}
-                  style={styles.input_multiline}
-                  placeholder="IT Company in Jakarta with requirements can using Eclipse and can code Java."
-                  onChangeText={(text) =>
-                    handleTextChange("targetCompany", text)
-                  }
-                  textAlignVertical="top"
-                  value={form.targetCompany}
-                />
-              </View>
+              <TextInput
+                multiline={true}
+                numberOfLines={2}
+                style={styles.input_multiline}
+                placeholder="IT Company in Jakarta with requirements can using Eclipse and can code Java."
+                onChangeText={(text) =>
+                  handleTextChange("targetCompany", text)
+                }
+                textAlignVertical="top"
+                value={form.targetCompany}
+              />
             </View>
           </View>
 
-          <TouchableOpacity>
-            <Button
-              style={{
-                backgroundColor: "#CE3762",
-                borderRadius: 4,
-                marginVertical: 10,
-                marginHorizontal: 30,
-              }}
-              onPress={() => handleButtonPress()}
-            >
-              <Text color="#FFFFFF" bold={true}>
-                Start
-              </Text>
-            </Button>
-          </TouchableOpacity>
-        </ScrollView>
-      </SafeAreaView>
-    </View>
+          <Button
+            marginTop={32}
+            borderRadius={6}
+            backgroundColor="#CE3762"
+            padding={12}
+            justifyContent="center"
+            alignItems="center"
+            onPress={() => handleButtonPress()}
+            width={'$full'}
+          >
+            <Text color="#FFFFFF" bold={true}>
+              Start
+            </Text>
+          </Button>
+        </Box>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

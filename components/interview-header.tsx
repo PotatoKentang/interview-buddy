@@ -69,11 +69,8 @@ export default function InterviewHeader({
           justifyContent: "space-between",
           alignItems: "center",
           padding: "2%",
-          shadowColor: "#000000",
-          shadowOffset: { width: 4, height: 4 },
-          shadowOpacity: 0.2,
-          shadowRadius: 20,
-          elevation: 4,
+          borderBottomColor: '#EFEFEF',
+          borderBottomWidth: 0.5,
         }}
       >
         <AntDesign

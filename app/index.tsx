@@ -1,9 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { GluestackUIProvider, HStack, Heading, Text, VStack } from "@gluestack-ui/themed";
+import { Box, GluestackUIProvider, HStack, Heading, Text, VStack } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config"
 import { Link, useFocusEffect } from "expo-router";
 import React, { useState } from "react";
-import { ImageBackground, Pressable, ScrollView, View } from "react-native";
+import { ImageBackground, Pressable, ScrollView, StatusBar, View } from "react-native";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TLocalStorage } from "../lib/types";
@@ -30,17 +30,21 @@ export default function Index() {
 
   return (
     <GluestackUIProvider config={config}>
+      <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "transparent" translucent = {true}/>
       <SafeAreaView
         style={{
           width: wp("100%"),
-          flexDirection: "column",
-          alignItems: "center",
           backgroundColor: "#FAF9F6",
           flex: 1,
           height: "100%",
         }}
       >
-        <ScrollView>
+        <ScrollView
+          style={{
+            flex: 1,
+            height: '100%'
+          }}
+        >
           <ImageBackground
             source={require("../assets/images/interviewback.png")}
             className="Header"
@@ -48,68 +52,80 @@ export default function Index() {
               width: "100%",
               height: 232,
               justifyContent: "center",
-              alignItems: "center",
+              // alignItems: "center",
               borderBottomLeftRadius: 30,
               borderBottomRightRadius: 30,
             }}
           >
-            <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>Hi, John</Text>
+            <Text bold size="3xl" color="#FFFFFF" marginLeft={56}>Good Luck</Text>
           </ImageBackground>
           <View style={{ width: wp("100%") }}>
-            <VStack marginHorizontal="$5">
-              <Link
-                href="/interview/interview-type"
-                asChild
+            <VStack>
+              <Box
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
+                  position: 'absolute',
+                  width: '100%',
+                  borderTopLeftRadius: 16,
+                  borderTopRightRadius: 16,
+                  height: 16,
+                  transform: [{ translateY: -16 }],
+                  backgroundColor: '#FAF9F6'
                 }}
               >
-                <Pressable
-                  style={{
-                    paddingHorizontal: 24,
-                    transform: [{ translateY: -50 }],
-                    paddingVertical: 32,
-                    borderRadius: 18,
-                    shadowColor: "#000000",
-                    shadowOffset: { width: 4, height: 4 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 20,
-                    elevation: 4,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    backgroundColor: "#FFFFFF",
-                  }}
+
+              </Box>
+              <Box marginHorizontal="$5">
+                <Link
+                  href="/interview/interview-type"
+                  asChild
                 >
-                  <View style={{ flexDirection: "column" }}>
-                    <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                      Start Interview
-                    </Text>
-                    <Text
-                      style={{ marginTop: 8, fontSize: 14, fontWeight: "normal" }}
+                    <Pressable
+                      style={{
+                        paddingHorizontal: 24,
+                        transform: [{ translateY: -50 }],
+                        paddingVertical: 20,
+                        borderRadius: 18,
+                        shadowColor: "#000000",
+                        shadowOffset: { width: 4, height: 4 },
+                        shadowOpacity: 0.2,
+                        shadowRadius: 20,
+                        elevation: 4,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: 'center',
+                        backgroundColor: "#FFFFFF",
+                      }}
                     >
-                      Interview for a specific job
-                    </Text>
-                  </View>
-                  <MaterialIcons name="navigate-next" size={32} color="#CE3762" />
-                </Pressable>
-              </Link>
-              <HStack alignItems="center" justifyContent="space-between">
+                      <VStack>
+                        <Text size="xl" bold>
+                          Start Interview
+                        </Text>
+                        <Text
+                          size="sm"
+                          // bold
+                        >
+                          Let's train your interview skill
+                        </Text>
+                      </VStack>
+                      <MaterialIcons name="navigate-next" size={32} color="#CE3762" />
+                    </Pressable>
+                </Link>
+              </Box>
+              <HStack marginHorizontal="$5" alignItems="center" justifyContent="space-between" paddingRight={4}>
                 <Heading>Recent Interviews</Heading>
                 <Link
                   href="/interview/recent-interviews"
-                  style={{
-                    fontSize: 10,
-                    color: "#CE3762",
-                    fontWeight: "bold",
-                    marginLeft: 8,
-                  }}
                 >
-                  See More
+                  <Text size="xs" bold color="#CE3762">See More</Text>
                 </Link>
               </HStack>
 
-              <View>
+              <Box
+                style={{
+                  paddingBottom: 32 
+                }}  
+                marginHorizontal="$5"
+              >
                 {recentInterviews.length > 0 &&
                   recentInterviews.map((interview, index) => (
                     <Link
@@ -142,16 +158,12 @@ export default function Index() {
                         <View
                           style={{ flexDirection: "column", maxWidth: "80%" }}
                         >
-                          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                          <Text bold size="lg">
                             Interview as {interview.promptInformation?.role} at{" "}
                             {interview.promptInformation?.workPlace}
                           </Text>
                           <Text
-                            style={{
-                              marginTop: 8,
-                              fontSize: 14,
-                              fontWeight: "normal",
-                            }}
+                            size="sm"
                           >
                             {interview.promptInformation?.maxQuestions} Questions
                           </Text>
@@ -165,7 +177,7 @@ export default function Index() {
                       </Pressable>
                     </Link>
                   ))}
-              </View>
+              </Box>
             </VStack>
           </View>
         </ScrollView>
