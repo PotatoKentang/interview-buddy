@@ -89,7 +89,7 @@ function RootLayoutNav() {
         <Stack.Screen
           name="interview/bulk/[id]"
           options={{
-            headerShown:false,
+            header: ()=><InterviewHeader type="back" title="Question"/>,
             presentation: 'modal',
             gestureEnabled: true
           }}

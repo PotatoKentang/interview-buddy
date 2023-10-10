@@ -88,20 +88,25 @@ export default function BulkQuestionQuery() {
       }}
     >
       <ScrollView>
-        <ImageBackground
-          source={require("../../../assets/images/interviewback.png")}
-          style={{
-            width: "100%",
-            height: 200,
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>
-            {question}
-          </Text>
-        </ImageBackground>
+        <View marginHorizontal={24}>
+          <ImageBackground
+            resizeMode="cover"
+            source={require("../../../assets/images/interviewback.png")}
+            imageStyle={{
+              borderRadius: 12
+            }}
+            style={{
+              width: "auto",
+              height: 200,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text color="#FFFFFF" bold size="xl" marginHorizontal={32}>
+              {question}
+            </Text>
+          </ImageBackground>
+        </View>
         <View
           justifyContent="center"
           alignItems="center"
