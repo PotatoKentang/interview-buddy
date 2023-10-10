@@ -1,5 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Button, Text } from "@gluestack-ui/themed";
+import { 
+  Button,
+  Text,
+  View 
+} from "@gluestack-ui/themed";
 import Voice, { SpeechResultsEvent } from "@react-native-voice/voice";
 import { Audio } from "expo-av";
 import { useLocalSearchParams } from "expo-router";
@@ -10,8 +14,7 @@ import {
   SafeAreaView,
   ScrollView,
   TextInput,
-  View,
-} from "react-native"; // Import KeyboardAvoidingView
+} from "react-native";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { ChatBubble } from "../../components/chat-bubble";
 import { tts } from "../../constant/links";
@@ -163,35 +166,35 @@ export default function Interview() {
           bounces={false}
           showsVerticalScrollIndicator={false}
           style={{
-            paddingTop: 20,
-            paddingBottom: 100,
             height: "80%",
             minWidth: wp("90%"),
             marginHorizontal: "auto",
           }}
         >
-          {!interview.length && !isInterviewStarted && (
-            <ChatBubble from={"system"} text={"Start the Interview"}>
-              <Button
-                backgroundColor="transparent"
-                paddingTop={12}
-                onPress={() => initiateInterview()}
-              >
-                <Text bold={true} color="#CE3762" underline textAlign="center">
-                  Click Here to Start
-                </Text>
-              </Button>
-            </ChatBubble>
-          )}
-          {interview.map((conversation, index) => {
-            return (
-              <ChatBubble
-                key={index}
-                from={conversation.from}
-                text={conversation.text}
-              />
-            );
-          })}
+          <View paddingTop={12} paddingBottom={12}>
+            {!interview.length && !isInterviewStarted && (
+              <ChatBubble from={"system"} text={"Start the Interview"}>
+                <Button
+                  backgroundColor="transparent"
+                  paddingTop={12}
+                  onPress={() => initiateInterview()}
+                >
+                  <Text bold={true} color="#CE3762" underline textAlign="center">
+                    Click Here to Start
+                  </Text>
+                </Button>
+              </ChatBubble>
+            )}
+            {interview.map((conversation, index) => {
+              return (
+                <ChatBubble
+                  key={index}
+                  from={conversation.from}
+                  text={conversation.text}
+                />
+              );
+            })}
+          </View>
         </ScrollView>
         {!interview.length ? null : speaking ? (
           <Button
@@ -254,30 +257,55 @@ export default function Interview() {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              flex: 1,
               paddingHorizontal: 14,
-              backgroundColor: '#CE3762'
+              paddingTop: 8,
+              paddingBottom: 10,
+              backgroundColor: '#FFFFFF',
+              justifyContent: 'flex-end',
+              borderTopColor: '#EAEAEA',
+              borderTopWidth: 0.5,
             }}
+            // style={{
+            //   flexDirection: "row",
+            //   alignItems: "center",
+            //   paddingHorizontal: 14,
+            //   paddingTop: 8,
+            //   paddingBottom: 10,
+            //   backgroundColor: '#CE3762',
+            //   justifyContent: 'flex-end',
+            // }}
           >
             <TextInput
               style={{
                 height: 40,
                 flex: 9,
                 borderWidth: 1,
-                borderColor: "gray",
+                borderColor: "#CCCCCC",
                 padding: 10,
-                borderRadius: 5,
+                borderRadius: 16,
+                backgroundColor: '#FFFFFF',
+                color: '#181818',
               }}
+              // style={{
+              //   height: 40,
+              //   flex: 9,
+              //   borderWidth: 1,
+              //   borderColor: "#671C31",
+              //   padding: 10,
+              //   borderRadius: 16,
+              //   backgroundColor: '#A52C4E',
+              //   color: '#FFFFFF',
+              // }}
               placeholder="Input"
+              // placeholderTextColor={'#E69BB0'}
+              placeholderTextColor={'#CCCCCC'}
               onChangeText={(text) => setTextInput(text)}
               value={textInput}
             />
             <View
               style={{
-                backgroundColor: "#CE3762",
+                // backgroundColor: "red",
                 borderRadius: 5,
-                width: 40,
-                height: 40,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: 10,
@@ -285,8 +313,8 @@ export default function Interview() {
             >
               <Ionicons
                 name="send"
-                size={20}
-                color="white"
+                size={24}
+                color="#CE3762"
                 onPress={() => fetchInterviewResponse(textInput)}
               />
             </View>
