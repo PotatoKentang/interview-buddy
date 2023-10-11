@@ -127,7 +127,7 @@ export default function Index() {
                 marginHorizontal="$5"
               >
                 {recentInterviews.length > 0 &&
-                  recentInterviews.map((interview, index) => (
+                  recentInterviews.reverse().map((interview, index) => (
                     <Link
                       key={index}
                       href={{

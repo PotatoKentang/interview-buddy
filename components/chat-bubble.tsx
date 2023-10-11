@@ -39,7 +39,14 @@ export const ChatBubble = ({
         },
       ]}
     >
-      <Text style={[textStyle, {fontWeight: "bold", marginBottom: 6}]}>{from[0].toUpperCase()+from.slice(1)}</Text>
+      <Text 
+        style={[
+          textStyle, 
+          {
+            fontWeight: "bold", 
+            marginBottom: 6,
+          }]}
+      >{from[0].toUpperCase()+from.slice(1)}</Text>
       <Text style={textStyle}>{text}</Text>
       {children}
     </View>

@@ -7,7 +7,7 @@ import {
 import Voice, { SpeechResultsEvent } from "@react-native-voice/voice";
 import { Audio } from "expo-av";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -26,8 +26,10 @@ import {
   getStoragePermission,
 } from "../../utils/ask-permission";
 export default function Interview() {
+  const scrollViewRef = useRef();
   const [modeInputText, setModeInputText] = useState<boolean>(false);
   const [textInput, setTextInput] = useState<string>("");
+  const [isTextNull, setIsTextNull] = useState<boolean>(true); 
   const [speaking, setSpeaking] = useState<boolean>(false);
   const [results, setResults] = useState<string[]>([]);
   const interview = useInterviewStore((state) => state.interview);
@@ -99,6 +101,8 @@ export default function Interview() {
     textInput: string | undefined = undefined
   ) => {
     await stopSound();
+    setTextInput('');
+    setIsTextNull(true);
     if (isFetching) return;
 
     try {
@@ -122,7 +126,6 @@ export default function Interview() {
         setSound(audioSound);
       }
 
-      setTextInput("");
     } catch (error) {
       console.log(error);
     } finally {
@@ -163,6 +166,8 @@ export default function Interview() {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <ScrollView
+          ref={scrollViewRef}
+          onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}    
           bounces={false}
           showsVerticalScrollIndicator={false}
           style={{
@@ -265,15 +270,6 @@ export default function Interview() {
               borderTopColor: '#EAEAEA',
               borderTopWidth: 0.5,
             }}
-            // style={{
-            //   flexDirection: "row",
-            //   alignItems: "center",
-            //   paddingHorizontal: 14,
-            //   paddingTop: 8,
-            //   paddingBottom: 10,
-            //   backgroundColor: '#CE3762',
-            //   justifyContent: 'flex-end',
-            // }}
           >
             <TextInput
               style={{
@@ -286,25 +282,19 @@ export default function Interview() {
                 backgroundColor: '#FFFFFF',
                 color: '#181818',
               }}
-              // style={{
-              //   height: 40,
-              //   flex: 9,
-              //   borderWidth: 1,
-              //   borderColor: "#671C31",
-              //   padding: 10,
-              //   borderRadius: 16,
-              //   backgroundColor: '#A52C4E',
-              //   color: '#FFFFFF',
-              // }}
               placeholder="Input"
-              // placeholderTextColor={'#E69BB0'}
               placeholderTextColor={'#CCCCCC'}
-              onChangeText={(text) => setTextInput(text)}
+              onChangeText={(text) =>
+                {
+                  if(text === '') setIsTextNull(true);
+                  else setIsTextNull(false);
+                  setTextInput(text)
+                }
+              }
               value={textInput}
             />
             <View
               style={{
-                // backgroundColor: "red",
                 borderRadius: 5,
                 alignItems: "center",
                 justifyContent: "center",
@@ -314,8 +304,12 @@ export default function Interview() {
               <Ionicons
                 name="send"
                 size={24}
-                color="#CE3762"
-                onPress={() => fetchInterviewResponse(textInput)}
+                color= {isTextNull ? "#DDDDDD" : "#CE3762"} 
+                onPress={() => 
+                  {
+                    if(isTextNull) return;
+                    fetchInterviewResponse(textInput);
+                  }}
               />
             </View>
           </View>
