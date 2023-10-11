@@ -25,8 +25,12 @@ import {
   getMicrophonePermission,
   getStoragePermission,
 } from "../../utils/ask-permission";
-export default function Interview() {
-  const scrollViewRef = useRef();
+import { FlatList } from "react-native-gesture-handler";
+
+export default function Interview()
+{
+  const scrollViewRef = useRef<ScrollView>(null);
+  const FlatListRef = useRef<FlatList>(null);
   const [modeInputText, setModeInputText] = useState<boolean>(false);
   const [textInput, setTextInput] = useState<string>("");
   const [isTextNull, setIsTextNull] = useState<boolean>(true); 
@@ -40,6 +44,12 @@ export default function Interview() {
   const [lastPromptedResult, setLastPromptedResult] = useState<string | null>(
     null
   );
+
+  const scrollToIndex = () => {
+    // Use the `scrollToIndex` method on the FlatList reference
+    FlatListRef.current?.scrollToIndex({ index: interview.length-1, animated: true });
+  }
+
   const { id } = useLocalSearchParams();
   const [isFetching, setIsFetching] = useState<boolean>(false); // Add this state variable
   const fetchInterviewHistory = useInterviewStore(
@@ -165,9 +175,38 @@ export default function Interview() {
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <ScrollView
+        <FlatList
+          ref={FlatListRef}
+          ListEmptyComponent={() => {
+            return (
+              <ChatBubble from={"system"} text={"Start the Interview"}>
+                <Button
+                  backgroundColor="transparent"
+                  paddingTop={12}
+                  onPress={() => initiateInterview()}
+                >
+                  <Text bold={true} color="#CE3762" underline textAlign="center">
+                    Click Here to Start
+                  </Text>
+                </Button>
+              </ChatBubble>
+            );
+          }}
+          data={interview}
+          renderItem={({item, index}) => <ChatBubble key={index} from={item.from} text={item.text}/>}
+          onContentSizeChange={() => 
+            {
+              if(interview.at(-1)?.from === 'system')
+              {
+                scrollToIndex();
+              }
+              else FlatListRef.current?.scrollToEnd({ animated: true })
+            }
+          }
+        />
+        {/* <ScrollView
           ref={scrollViewRef}
-          onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}    
+          onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}    
           bounces={false}
           showsVerticalScrollIndicator={false}
           style={{
@@ -200,7 +239,7 @@ export default function Interview() {
               );
             })}
           </View>
-        </ScrollView>
+        </ScrollView> */}
         {!interview.length ? null : speaking ? (
           <Button
             marginHorizontal="$5"
