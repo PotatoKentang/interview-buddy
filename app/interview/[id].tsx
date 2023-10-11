@@ -203,6 +203,13 @@ export default function Interview()
               else FlatListRef.current?.scrollToEnd({ animated: true })
             }
           }
+          onScrollToIndexFailed={info => {
+            const wait = new Promise(resolve => setTimeout(resolve, 500));
+            wait.then(() => {
+              FlatListRef.current?.scrollToIndex({ index: info.index, animated: true });
+            });
+          }}
+        
         />
         {/* <ScrollView
           ref={scrollViewRef}
