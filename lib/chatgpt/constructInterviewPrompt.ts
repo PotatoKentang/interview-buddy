@@ -21,10 +21,6 @@ export const constructInterviewPrompt = async ({
 
   assistantContent += `History: ${JSON.stringify(historicalInterview)}`;
 
-  if (additionalInformation) {
-    assistantContent += `Additional Information: [${additionalInformation}]\n`;
-  }
-
   return [
     {
       role: "system",
@@ -33,6 +29,7 @@ export const constructInterviewPrompt = async ({
         2. Avoid Repetition: Ensure that you don't repeat the same question. Keep the conversation dynamic.
         3. Max Questions: You are limited to asking a maximum of ${maxQuestions} questions.
         4. Maintain a professional tone throughout the interview.
+        ${ additionalInformation === '' || additionalInformation === null ? null : '5. here are some additional information about the company:'+ additionalInformation}
         Let's begin the interview or continue if it's already ongoing.`,
     },
     {

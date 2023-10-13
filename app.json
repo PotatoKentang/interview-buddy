@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.jeffjuann.InterviewBuddy"
     },
     "web": {
       "bundler": "metro",
@@ -35,9 +36,17 @@
     "experiments": {
       "typedRoutes": true
     },
-    "permissions":[
+    "permissions": [
       "READ_EXTERNAL_STORAGE",
       "WRITE_EXTERNAL_STORAGE"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8bbdd221-2ede-4bd6-bacc-a6fbccbbf6de"
+      }
+    }
   }
 }

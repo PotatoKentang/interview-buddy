@@ -40,9 +40,9 @@ export default function index() {
       placement: "top",
       render: ({ id }) => {
         return (
-          <Toast nativeId={id} action="warning" variant="accent" mt="$10">
+          <Toast nativeId={id} action="warning" variant="accent" mt="$12" padding={8} backgroundColor="#FFFFFF" borderColor="red" borderWidth={1} borderRadius={6}>
             <VStack space="xs">
-              <ToastTitle>{toastTitle}</ToastTitle>
+              <ToastTitle bold>{toastTitle}</ToastTitle>
               <ToastDescription textBreakStrategy="balanced">
                 {toastDescription}
               </ToastDescription>
@@ -73,7 +73,7 @@ export default function index() {
     if (parseInt(form.maxQuestions) <= 0 || form.maxQuestions == "") {
       renderToast(
         "Max Questions",
-        "Max questions cannot be empty nor negative"
+        "Max questions cannot be zero nor negative"
       );
       return;
     }

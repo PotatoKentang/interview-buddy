@@ -37,6 +37,7 @@ export default function Interview()
   const [speaking, setSpeaking] = useState<boolean>(false);
   const [results, setResults] = useState<string[]>([]);
   const interview = useInterviewStore((state) => state.interview);
+  const promptInformation = useInterviewStore((state) => state.promptInformation);
   const [isInterviewStarted, setIsInterviewStarted] = useState<boolean>(false);
   const sound = useSoundStore((state) => state.sound);
   const stopSound = useSoundStore((state) => state.stopSound);
@@ -45,6 +46,8 @@ export default function Interview()
     null
   );
 
+
+    
   const scrollToIndex = () => {
     // Use the `scrollToIndex` method on the FlatList reference
     FlatListRef.current?.scrollToIndex({ index: interview.length-1, animated: true });
@@ -211,155 +214,132 @@ export default function Interview()
           }}
         
         />
-        {/* <ScrollView
-          ref={scrollViewRef}
-          onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}    
-          bounces={false}
-          showsVerticalScrollIndicator={false}
-          style={{
-            height: "80%",
-            minWidth: wp("90%"),
-            marginHorizontal: "auto",
-          }}
-        >
-          <View paddingTop={12} paddingBottom={12}>
-            {!interview.length && !isInterviewStarted && (
-              <ChatBubble from={"system"} text={"Start the Interview"}>
-                <Button
-                  backgroundColor="transparent"
-                  paddingTop={12}
-                  onPress={() => initiateInterview()}
-                >
-                  <Text bold={true} color="#CE3762" underline textAlign="center">
-                    Click Here to Start
-                  </Text>
-                </Button>
-              </ChatBubble>
-            )}
-            {interview.map((conversation, index) => {
-              return (
-                <ChatBubble
-                  key={index}
-                  from={conversation.from}
-                  text={conversation.text}
-                />
-              );
-            })}
-          </View>
-        </ScrollView> */}
-        {!interview.length ? null : speaking ? (
-          <Button
-            marginHorizontal="$5"
-            padding={12}
-            justifyContent="center"
-            alignItems="center"
-            style={{
-              backgroundColor: "#CE3762",
-              borderRadius: 6,
-            }}
-            onPress={() => stopSpeechToText()}
-          >
-            <Text bold={true} color="#FFFFFF">
-              Stop
-            </Text>
-          </Button>
-        ) : modeInputText === false ? (
-          <View>
-            <Button
-              marginHorizontal="$5"
-              padding={12}
-              justifyContent="center"
-              alignItems="center"
-              style={{
-                backgroundColor: "#CE3762",
-                borderRadius: 6,
-              }}
-              onPress={() => startSpeechToText()}
+        {
+          interview.at(-1)?.from !== 'system' ?  
+          !interview.length ? null : speaking ? (
+            <View
+              borderTopColor= '#EAEAEA'
+              borderTopWidth={0.5}
             >
-              <Text bold={true} color="#FFFFFF">
-                Speak
-              </Text>
-            </Button>
-            <Button
-              marginVertical={6}
-              justifyContent="center"
-              alignItems="center"
-              onPress={() => {
-                setModeInputText(true);
-              }}
-              style={{
-                backgroundColor: "transparent",
-              }}
-            >
-              <Text
+              <Button
+                marginTop="$2"
+                marginHorizontal="$5"
+                padding={12}
+                justifyContent="center"
+                alignItems="center"
                 style={{
-                  borderRadius: 4,
-                  marginBottom: 5,
-                  marginHorizontal: 50,
+                  backgroundColor: "#CE3762",
+                  borderRadius: 6,
                 }}
-                color="#CE3762"
+                onPress={() => stopSpeechToText()}
               >
-                Can't speak right now?
-              </Text>
-            </Button>
-          </View>
-        ) : (
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              paddingHorizontal: 14,
-              paddingTop: 8,
-              paddingBottom: 10,
-              backgroundColor: '#FFFFFF',
-              justifyContent: 'flex-end',
-              borderTopColor: '#EAEAEA',
-              borderTopWidth: 0.5,
-            }}
-          >
-            <TextInput
-              style={{
-                height: 40,
-                flex: 9,
-                borderWidth: 1,
-                borderColor: "#CCCCCC",
-                padding: 10,
-                borderRadius: 16,
-                backgroundColor: '#FFFFFF',
-                color: '#181818',
-              }}
-              placeholder="Input"
-              placeholderTextColor={'#CCCCCC'}
-              onChangeText={(text) =>
-                {
-                  if(text === '') setIsTextNull(true);
-                  else setIsTextNull(false);
-                  setTextInput(text)
-                }
-              }
-              value={textInput}
-            />
+                <Text bold={true} color="#FFFFFF">
+                  Stop
+                </Text>
+              </Button>
+            </View>
+          ) : modeInputText === false ? (
+            <View
+              borderTopColor= '#EAEAEA'
+              borderTopWidth={0.5}
+            >
+              <Button
+                marginTop="$2"
+                marginHorizontal="$5"
+                padding={12}
+                justifyContent="center"
+                alignItems="center"
+                style={{
+                  backgroundColor: "#CE3762",
+                  borderRadius: 6,
+                }}
+                onPress={() => startSpeechToText()}
+              >
+                <Text bold={true} color="#FFFFFF">
+                  Speak
+                </Text>
+              </Button>
+              <Button
+                marginVertical={6}
+                justifyContent="center"
+                alignItems="center"
+                onPress={() => {
+                  setModeInputText(true);
+                }}
+                style={{
+                  backgroundColor: "transparent",
+                }}
+              >
+                <Text
+                  style={{
+                    borderRadius: 4,
+                    marginBottom: 5,
+                    marginHorizontal: 50,
+                  }}
+                  color="#CE3762"
+                >
+                  Can't speak right now?
+                </Text>
+              </Button>
+            </View>
+          ) : (
             <View
               style={{
-                borderRadius: 5,
+                flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "center",
-                marginLeft: 10,
+                paddingHorizontal: 14,
+                paddingTop: 8,
+                paddingBottom: 10,
+                backgroundColor: '#FFFFFF',
+                justifyContent: 'flex-end',
+                borderTopColor: '#EAEAEA',
+                borderTopWidth: 0.5,
               }}
             >
-              <Ionicons
-                name="send"
-                size={24}
-                color= {isTextNull ? "#DDDDDD" : "#CE3762"} 
-                onPress={() => 
+              <TextInput
+                style={{
+                  height: 40,
+                  flex: 9,
+                  borderWidth: 1,
+                  borderColor: "#CCCCCC",
+                  padding: 10,
+                  borderRadius: 16,
+                  backgroundColor: '#FFFFFF',
+                  color: '#181818',
+                }}
+                placeholder="Input"
+                placeholderTextColor={'#CCCCCC'}
+                onChangeText={(text) =>
                   {
-                    if(isTextNull) return;
-                    fetchInterviewResponse(textInput);
-                  }}
+                    if(text === '') setIsTextNull(true);
+                    else setIsTextNull(false);
+                    setTextInput(text)
+                  }
+                }
+                value={textInput}
               />
+              <View
+                style={{
+                  borderRadius: 5,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginLeft: 10,
+                }}
+              >
+                <Ionicons
+                  name="send"
+                  size={24}
+                  color= {isTextNull ? "#DDDDDD" : "#CE3762"} 
+                  onPress={() => 
+                    {
+                      if(isTextNull) return;
+                      fetchInterviewResponse(textInput);
+                    }}
+                />
+              </View>
             </View>
-          </View>
-        )}
+          ) : null
+        }
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
