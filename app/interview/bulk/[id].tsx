@@ -20,7 +20,8 @@ export default function BulkQuestionQuery() {
   const [isListening, setIsListening] = useState<boolean>(false);
   const [results, setResults] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [evaluation, setEvaluation] = useState<string | null>("");
+  const [evaluation, setEvaluation] = useState<string | null>(""); 
+  // const [evaluation, setEvaluation] = useState<string | null>("Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero totam mollitia, commodi, non aut assumenda quibusdam vel, quasi explicabo autem itaque praesentium cupiditate consequuntur. Eaque consectetur cupiditate corporis impedit a."); 
   const [loading, setLoading] = useState<boolean>(false); // Added loading state
 
   const startListening = async () => {
@@ -110,10 +111,9 @@ export default function BulkQuestionQuery() {
         <View
           justifyContent="center"
           alignItems="center"
-          style={{ marginTop: "40%" }}
         >
           {!evaluation && (
-            <>
+            <View style={{ marginTop: "40%" }}>
               <TouchableOpacity
                 onPress={isListening ? stopListening : startListening}
               >
@@ -134,26 +134,31 @@ export default function BulkQuestionQuery() {
               <Text color="black" style={{ marginTop: 10 }}>
                 {isListening ? "Listening..." : "Tap To Speak"}
               </Text>
-            </>
+            </View>
           )}
           {loading && <ActivityIndicator size="large" color="#CE3762" />}
           {!!evaluation && (
-            <>
-              <Text>{evaluation}</Text>
+            <View marginTop={24} marginHorizontal={24}>
+              <Text bold>Your Evaluation:</Text>
+              <Text mt={12}>{evaluation}</Text>
               <TouchableOpacity>
                 <Button
-                  style={{
-                    backgroundColor: "#CE3762",
-                    borderRadius: 4,
-                    marginVertical: 10,
-                    marginHorizontal: 30,
-                  }}
+                  marginTop={32}
+                  marginBottom={24}
+                  borderRadius={6}
+                  backgroundColor="#CE3762"
+                  padding={12}
+                  justifyContent="center"
+                  alignItems="center"
                   onPress={() => resetAnswer()}
+                  width={'$full'}
                 >
-                  <Text color="#FFFFFF">Try Again</Text>
+                  <Text color="#FFFFFF" bold={true}>
+                    Try Again
+                  </Text>
                 </Button>
               </TouchableOpacity>
-            </>
+            </View>
           )}
         </View>
       </ScrollView>
