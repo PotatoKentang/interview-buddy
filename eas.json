@@ -32,7 +32,7 @@
         "buildConfiguration": "Release"
       },
       "env": {
-        "EXPO_PUBLIC_OPENAI_API_KEY": "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"
+        "EXPO_PUBLIC_OPENAI_API_KEY": ""
       },
       "channel": "production"
     }
